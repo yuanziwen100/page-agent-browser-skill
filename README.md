@@ -2,9 +2,15 @@
 
 The Codex skill for driving Alibaba PageAgent through a real Chrome profile.
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](./LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/yuanziwen100/page-agent-browser-skill?style=flat-square)](https://github.com/yuanziwen100/page-agent-browser-skill/stargazers)
+[![Upstream TypeScript](https://img.shields.io/badge/Upstream-TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://github.com/alibaba/page-agent)
+[![Upstream Downloads](https://img.shields.io/npm/dm/page-agent?style=flat-square)](https://www.npmjs.com/package/page-agent)
+[![Upstream Bundle Size](https://img.shields.io/bundlephobia/minzip/page-agent?style=flat-square)](https://bundlephobia.com/package/page-agent)
+
 🌐 English | [中文](./README-ZN.md)
 
-## Overview
+## ✨ Overview
 
 `page-agent-browser` is a Codex skill that combines:
 
@@ -31,7 +37,7 @@ This skill gives Codex a practical operating model:
 2. PageAgent handles higher-level natural-language interaction.
 3. Codex verifies the result instead of trusting agent output blindly.
 
-## Key Features
+## 🚀 Key Features
 
 - Prefer `chrome-devtools-real` over isolated browser sessions
 - Reuse the user's real Chrome profile and login state
@@ -40,13 +46,14 @@ This skill gives Codex a practical operating model:
 - Verify final focused tab after multi-page execution
 - Repair incorrect end-tab state when the agent reports success but leaves the wrong tab selected
 
-## Repository Layout
+## 📁 Repository Layout
 
 ```text
 .
 ├─ README.md
 ├─ README-ZN.md
 ├─ .gitignore
+├─ LICENSE
 └─ skill/
    ├─ SKILL.md
    ├─ agents/
@@ -55,7 +62,7 @@ This skill gives Codex a practical operating model:
       └─ page-agent-real-chrome.md
 ```
 
-## Requirements
+## ✅ Requirements
 
 - Codex CLI with skill support
 - Browser MCP configured
@@ -63,7 +70,49 @@ This skill gives Codex a practical operating model:
 - Chrome with `Page Agent Ext` installed in the profile Codex should use
 - An OpenAI-compatible model endpoint for PageAgent
 
-## Recommended Runtime Setup
+## 📦 Installation
+
+### Option 1. Copy the packaged skill directory
+
+1. Download or clone this repository.
+2. Copy the `skill/` folder into your Codex skills directory.
+3. Rename the copied folder to `page-agent-browser` if needed.
+
+Typical target:
+
+```text
+~/.codex/skills/page-agent-browser
+```
+
+On this machine:
+
+```text
+C:\Users\15790\.codex\skills\page-agent-browser
+```
+
+### Option 2. Install from the local publish folder
+
+If you already have this repository on disk, copy:
+
+```text
+page-agent-browser-skill/skill
+```
+
+to:
+
+```text
+~/.codex/skills/page-agent-browser
+```
+
+### After installation
+
+1. Restart Codex CLI so it reloads the skill list.
+2. Start Codex with `chrome-devtools-real` available.
+3. Open your real Chrome profile with `Page Agent Ext` installed.
+4. Enable remote debugging for that Chrome session.
+5. Invoke the skill explicitly in your prompt.
+
+## 🧭 Recommended Runtime Setup
 
 1. Start Codex with `chrome-devtools-real` enabled.
 2. Open the user's normal Chrome profile, not an isolated automation profile.
@@ -77,7 +126,7 @@ Example:
 Use $page-agent-browser to drive PageAgent through chrome-devtools-real in my real Chrome profile.
 ```
 
-## GitHub Notes
+## 🧪 GitHub Notes
 
 GitHub blocks external CDN script injection with CSP. On GitHub, this skill is extension-first by design.
 
@@ -87,18 +136,6 @@ That means:
 - `Page Agent Ext` is preferred
 - multi-tab tasks are supported, but Codex still verifies final selected tab state
 
-## Local Installation
+## 📄 License
 
-Copy `skill/` into your Codex skills directory and keep the folder name as `page-agent-browser`.
-
-Typical target:
-
-```text
-~/.codex/skills/page-agent-browser
-```
-
-On this machine:
-
-```text
-C:\Users\15790\.codex\skills\page-agent-browser
-```
+This repository is released under the [MIT License](./LICENSE).
