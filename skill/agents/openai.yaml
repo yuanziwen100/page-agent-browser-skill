@@ -1,0 +1,16 @@
+interface:
+  display_name: "Page Agent Browser"
+  short_description: "Use PageAgent in real Chrome through Codex."
+  default_prompt: "Use $page-agent-browser to drive PageAgent through chrome-devtools-real in my real Chrome profile."
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "chrome-devtools-real"
+      description: "Preferred browser MCP for attaching Codex to the user's real Chrome profile."
+    - type: "mcp"
+      value: "chrome-devtools"
+      description: "Fallback browser MCP when real Chrome attachment is unavailable."
+
+policy:
+  allow_implicit_invocation: true
