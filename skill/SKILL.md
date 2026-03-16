@@ -15,6 +15,8 @@ Read [references/page-agent-real-chrome.md](./references/page-agent-real-chrome.
 
 This skill exists to make Codex better at browser work that is too brittle or too verbose for raw `click` and `fill` scripting.
 
+Treat this as the preferred escalation target when `chrome-devtools-real` can still reach the page, but manual browser primitives are becoming expensive, fragile, or hard to maintain.
+
 Use it to:
 
 - drive the user's real Chrome through `chrome-devtools-real`
@@ -46,6 +48,25 @@ This skill is optimized for real-user browsing contexts, especially sites where:
 4. Prefer extension-backed usage when the attached browser already has Page Agent Ext and the task may span multiple steps or tabs.
 5. Fall back to direct page injection when extension-backed behavior is unavailable, unverifiable, or unnecessary.
 6. Verify the resulting DOM with browser snapshots instead of trusting the agent output alone.
+
+## Switching Rules
+
+Switch into this skill from `chrome-devtools-real` when any of the following are true:
+
+- the raw MCP path requires many low-level browser actions
+- selector discovery is taking longer than the task itself
+- the flow spans multiple tabs, pages, or coordinated navigation
+- the site is CSP-heavy and extension mode is more realistic than page injection
+- the user asks for PageAgent explicitly
+- repeated raw-browser retries indicate rising cost or brittleness
+
+Do not switch just because PageAgent exists.
+
+Stay with raw browser control when:
+
+- the task is short and deterministic
+- one or two direct browser actions solve it cleanly
+- PageAgent setup cost is higher than the remaining work
 
 ## Tooling Assumptions
 
@@ -102,6 +123,8 @@ Use direct injection mode when:
 - the task is limited to the current page
 - extension availability is uncertain
 - the page must be handled immediately and a normal in-page agent is sufficient
+
+Prefer extension-backed mode over direct injection when the reason for switching was CSP friction, multi-tab coordination, or repeated low-level browser failure.
 
 Do not invent a private extension API. If extension internals are not visible from the page, continue with normal browser tools plus direct PageAgent injection for the active tab.
 
@@ -229,3 +252,9 @@ Translate the official PageAgent integration model into Codex like this:
 5. Fall back to plain `chrome-devtools` only when the real-browser route is unavailable.
 
 Treat this skill as a browser-side adapter pattern, not as a standalone MCP server.
+
+When both skills are available, use this routing rule:
+
+1. Start with `chrome-devtools-real`.
+2. Escalate to `page-agent-browser` when manual browser control becomes high-cost or brittle.
+3. Return to ordinary browser verification after PageAgent execution.

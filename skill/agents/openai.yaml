@@ -1,7 +1,7 @@
 interface:
   display_name: "Page Agent Browser"
-  short_description: "Use PageAgent in real Chrome through Codex."
-  default_prompt: "Use $page-agent-browser to drive PageAgent through chrome-devtools-real in my real Chrome profile."
+  short_description: "Escalate complex real-Chrome workflows from raw MCP to PageAgent."
+  default_prompt: "Use $page-agent-browser when chrome-devtools-real can reach the page but raw browser actions are too brittle, costly, or multi-step."
 
 dependencies:
   tools:
@@ -11,6 +11,9 @@ dependencies:
     - type: "mcp"
       value: "chrome-devtools"
       description: "Fallback browser MCP when real Chrome attachment is unavailable."
+    - type: "skill"
+      value: "chrome-devtools-real"
+      description: "Default first-step browser transport before escalating to PageAgent."
 
 policy:
   allow_implicit_invocation: true
